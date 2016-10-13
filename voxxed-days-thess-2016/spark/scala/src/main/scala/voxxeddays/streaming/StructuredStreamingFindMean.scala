@@ -45,6 +45,7 @@ object StructuredStreamingFindMean {
     // Create tmp view of data
     val tmpTable = lines.createOrReplaceTempView("readings")
 
+    //calculate mean after filtering negative values
     val mean = lines.as[SensorData]
       .filter(_.sensorValue > 0)
       .groupBy("sensorId")

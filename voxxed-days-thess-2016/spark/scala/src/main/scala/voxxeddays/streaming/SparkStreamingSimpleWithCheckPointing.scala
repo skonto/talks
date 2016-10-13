@@ -27,7 +27,10 @@ object  SparkStreamingSimpleWithCheckPointing {
       val runtime = Runtime.getRuntime()
       val procs = runtime.availableProcessors()
 
+      // create the streaming context
       sConf.setMaster(s"local[${procs-1}]").setAppName("SimpleStreamingCheckpointing")
+
+      // create the streaming context
       val ssc = new StreamingContext(sConf, Seconds(batchDuration))
       ssc.sparkContext.setLogLevel("Error")
 
@@ -37,6 +40,7 @@ object  SparkStreamingSimpleWithCheckPointing {
 
       sensorStream.foreachRDD (rdd => reportMax(rdd, "tumbling"))
 
+      // create sliding window
       val slidingSensorStream = sensorStream.window(Seconds(10), Seconds(5))
 
       slidingSensorStream.foreachRDD(rdd => reportMax(rdd, "sliding"))

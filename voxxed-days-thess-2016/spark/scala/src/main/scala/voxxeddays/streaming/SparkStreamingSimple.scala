@@ -26,7 +26,7 @@ object SparkStreamingSimple {
     val runtime = Runtime.getRuntime()
     val procs = runtime.availableProcessors()
 
-    // configuration for the job is set here
+    // create the streaming context
     sConf.setMaster(s"local[${procs-1}]").setAppName("SimpleStreaming")
 
     // create the streaming context
