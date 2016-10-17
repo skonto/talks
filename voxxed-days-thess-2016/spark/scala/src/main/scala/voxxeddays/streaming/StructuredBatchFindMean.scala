@@ -53,6 +53,8 @@ object StructuredBatchFindMean {
     mean.repartition(1).write
       .format("csv")
       .save(writePath)
+
+    spark.stop()
   }
 }
 
