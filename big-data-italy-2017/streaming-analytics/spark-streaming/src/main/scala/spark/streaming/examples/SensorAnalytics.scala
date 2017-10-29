@@ -27,7 +27,7 @@ case class Data(key: String, value: String)
   * HOW TO RUN THIS APP
   *
   * 1) Start Zookeeper and Kafka locally. Make sure you enable topic deletion at server.properties file.
-  *
+  *  eg.  nohup ./bin/kafka-server-start.sh ./config/server.properties > ~/kafka/kafka.log 2>&1 &
   *
   * 2) Delete the input topic if already exists.
   *
