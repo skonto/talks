@@ -37,19 +37,19 @@ object SensorProducer {
   def main(args: Array[String]): Unit = {
     val parser = new scopt.OptionParser[KafkaSensorProducerConfig]("SensorProducer") {
       help("help").text("prints this usage text")
-      opt[String]('o', "topic").required().valueName("<topic>")
+      opt[String]("topic").required().valueName("<topic>")
         .action( (x, c) =>
           c.copy(topic = x) ).text(s"Kafka topic to to get the data from.")
-      opt[String]('o', "bootstrapServers").required().valueName("<servers>")
+      opt[String]("bootstrapServers").required().valueName("<servers>")
         .action( (x, c) =>
           c.copy(bootstrapServers = x) ).text(s"Kafka servers string.")
-      opt[Int]('o', "maxRecords").optional().valueName("<maxRecords>")
+      opt[Int]("maxRecords").optional().valueName("<maxRecords>")
         .action( (x, c) =>
           c.copy(maxRecords = x) ).text(s"maxRecords to generate.")
-      opt[Long]('o', "eventTimeDelayPeriod").optional().valueName("<eventTimeDelayPeriod>")
+      opt[Long]("eventTimeDelayPeriod").optional().valueName("<eventTimeDelayPeriod>")
         .action( (x, c) =>
           c.copy(eventTimeDelayTime = x) ).text(s"eventTimeDelayPeriod.")
-      opt[Long]('o', "recordRate").optional().valueName("<recordRate>")
+      opt[Long]("recordRate").optional().valueName("<recordRate>")
         .action( (x, c) =>
           c.copy(recordDelayTime = x) ).text(s"recordRate.")
     }

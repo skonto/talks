@@ -122,22 +122,22 @@ object SensorAnalytics {
     val appName="SensorAnalytics"
     val parser = new scopt.OptionParser[SensorAnalyticsConfig](appName) {
       help("help").text("prints this usage text")
-      opt[String]('o', "topic").required().valueName("<topic>")
+      opt[String]("topic").required().valueName("<topic>")
         .action( (x, c) =>
           c.copy(topic = x) ).text(s"Kafka topic to to get the data from.")
-      opt[String]('o', "bootstrapServers").required().valueName("<servers>")
+      opt[String]("bootstrapServers").required().valueName("<servers>")
         .action( (x, c) =>
           c.copy(bootstrapServers = x) ).text(s"triggerTime.")
-      opt[Long]('o', "triggerTime").optional().valueName("<triggerTime>")
+      opt[Long]("triggerTime").optional().valueName("<triggerTime>")
         .action( (x, c) =>
           c.copy(triggerTime = x) ).text(s"triggerTime.")
-      opt[Long]('o', "eventTime").optional().valueName("<eventTime>")
+      opt[Long]("eventTime").optional().valueName("<eventTime>")
         .action( (x, c) =>
           c.copy(eventTime = x) ).text(s"eventTime.")
-      opt[Long]('o', "windowDuration").optional().valueName("<windowDuration")
+      opt[Long]("windowDuration").optional().valueName("<windowDuration")
         .action( (x, c) =>
           c.copy(windowDuration = x) ).text(s"windowDuration.")
-      opt[Long]('o', "slideDuration").optional().valueName("<slideDuration>")
+      opt[Long]("slideDuration").optional().valueName("<slideDuration>")
         .action( (x, c) =>
           c.copy(slideDuration = x) ).text(s"slideDuration.")
     }

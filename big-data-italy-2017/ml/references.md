@@ -19,5 +19,8 @@ https://blog.openebs.io/data-scientists-adopting-tools-and-solutions-that-allow-
 
 [A/B Testing](https://www.oreilly.com/ideas/evaluating-machine-learning-models/page/6/the-pitfalls-of-a-b-testing)
 
+## ML Standardization
+
+
 
 ## Spark ML
