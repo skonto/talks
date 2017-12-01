@@ -6,14 +6,14 @@ var data;
             // HIGH: '#afafaf',
             // LOW: '#123456',
             // MEDIUM: 'blue',
-            defaultFill: 'green'
+            defaultFill: 'silver'
         },
       data: {},
         geographyConfig: {
             popupTemplate: function(geo, data) {
                 if ( !data ) return;
                 return ['<div class="hoverinfo"><strong>',
-                    'Number of things in ' + geo.properties.name,
+                    'Number of accepted RSVPs in ' + geo.properties.name,
                     ': ' + data.numberOfThings,
                     '</strong></div>'].join('');
             }

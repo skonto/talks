@@ -15,7 +15,7 @@ class HomeController @Inject() (kafkaAccess: KafkaAccess) extends InjectedContro
   }
 
   def ws = WebSocket.acceptOrResult[Any, String] { _ =>
-    val source = kafkaAccess.source("rsvps_topic")
+    val source = kafkaAccess.source("write_rsvp")
     val flow = Flow.fromSinkAndSource(Sink.ignore, source.map(_.value))
     Future.successful(Right(flow))
   }

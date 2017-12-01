@@ -8,6 +8,8 @@
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
 </head>
 <body>
+
+  <image style="width:400px; height:200px;" src="@routes.Assets.versioned("images/meetup.png")"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
 <script src="@routes.Assets.versioned("javascripts/datamaps.world.js")"></script>
@@ -18,9 +20,11 @@
         var myobj = JSON.parse(event.data);
         var code = twodig[myobj.code]
         console.log(code)
-        console.log(myobj.value)
+        console.log(myobj.count)
         var jsonVariable = {};
-        jsonVariable[code] = {fillKey: "blue", numberOfThings: myobj.value}
+        var old = map.options.data[code]
+        var  oldValue = typeof old !== "undefined" ? old.numberOfThings : (old = 0);
+        jsonVariable[code] = {fillKey: "blue", numberOfThings: oldValue + (myobj.count - oldValue) }
           map.updateChoropleth(jsonVariable)
       }
        </script>
