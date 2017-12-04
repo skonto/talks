@@ -2,10 +2,12 @@
 
 The app consists of three components:
 
-A. The RSVP producer (written in python) which writes raw rsvps from the Meetup.com Rest API to a topic in kafka.
-B. The Spark aggregator which reads the raw rsvps from kafka and makes calculations using
+1. The **RSVP Producer** (written in python) which writes raw rsvps from the Meetup.com Rest API to a topic in kafka.
+
+2. The **Spark Aggregator** which reads the raw rsvps from kafka and makes calculations using
 the Spark structured streaming API and at the end it writes each udpated output to another kafka topic.
-C. The visualization play app which reads the calculations from the kafka topic and depicts
+
+3. The **Visualization Play App** which reads the calculations from the kafka topic and depicts
 the number of accepted RSVPS using [DataMaps](http://datamaps.github.io/).
 
 ## Local deployment
@@ -16,7 +18,7 @@ Start zookeeper and kafka. Example for kafka.
 
 1) Start spark app:
 ```
-./bin/spark-submit --mastelocal[*] --class spark.streaming.examples.MeetUpRSVPAnalytics spark-streaming-examples-assembly-0.0.1-SNAPSHOT.jar \
+./bin/spark-submit --master local[*] --class spark.streaming.examples.MeetUpRSVPAnalytics spark-streaming-examples-assembly-0.0.1-SNAPSHOT.jar \
  --bootstrapServers localhost:9092 --topic rsvp_read --write-topic counts --checkpointDir /tmp/c2
 ```
 2) cd visual/play-visual

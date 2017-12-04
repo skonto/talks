@@ -16,7 +16,14 @@ def source(topic: String): Source[ConsumerRecord[String, String], _]
 class KafkaAccessUtils @Inject() (configuration: Configuration) extends KafkaAccess {
 def source(topic: String = "write_rsvp"): Source[ConsumerRecord[String, String], _] = {
      val deserializer = new StringDeserializer()
-     val kafkaUrl = "localhost:9092"
+     val kafkaUrl  = {
+     val tmp = configuration.get[String]("bootstrap_servers")
+      if( tmp == null) {
+         "localhost:9092"
+      } else{
+        tmp
+     }
+    }
 
     val config = configuration.getOptional[Configuration]("akka.kafka.consumer").getOrElse(Configuration.empty)
     val consumerSettings =  ConsumerSettings(config.underlying, deserializer, deserializer)
