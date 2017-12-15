@@ -1,0 +1,23 @@
+{
+  "id": "rsvp-producer",
+    "cpus": 1,
+    "mem": 1024,
+    "cmd": "/run.sh --topic rsvp_reads",
+    "disk" : 1000,
+    "instances": 1,
+    "container": {
+       "type": "DOCKER",
+       "docker": {
+        "image": "skonto/rsvp_producer:1.0.0",
+        "network": "BRIDGE",
+        "forcePullImage": true
+       }
+     },
+    "user": "root",
+    "env": {
+       "RSVP_KAFKA_BOOTSTRAP_SERVERS": "kafka-0-broker.kafka.autoip.dcos.thisdcos.directory:1025"
+     },
+  "acceptedResourceRoles": [
+        "*"
+    ]
+}

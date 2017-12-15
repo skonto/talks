@@ -1,0 +1,32 @@
+{
+  "id": "rsvp-app",
+    "cpus": 1,
+    "mem": 1024,
+    "disk" : 1000,
+    "instances": 1,
+    "container": {
+       "type": "DOCKER",
+       "docker": {
+        "image": "skonto/visual_play_rsvp:1.0.0",
+        "network": "BRIDGE",
+          "forcePullImage":true,
+          "portMappings": [
+          {
+            "hostPort": 0, "containerPort": 9000, "servicePort": 10000
+         }
+        ]
+       }
+     }
+,
+"env" : {
+   "BOOTSTRAP_SERVERS": "broker.kafka.l4lb.thisdcos.directory:9092",
+   "RSVP_READ_TOPIC": "rsvp_counts"
+ },
+"acceptedResourceRoles": [
+    "slave_public"
+],
+"labels":{
+  "HAPROXY_GROUP":"external",
+  "HAPROXY_DEPLOYMENT_ALT_PORT" : "10005"
+}
+}
