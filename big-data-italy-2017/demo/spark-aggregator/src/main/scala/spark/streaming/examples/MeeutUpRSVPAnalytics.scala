@@ -2,6 +2,7 @@ package spark.streaming.examples
 
 import org.apache.spark.sql.{SparkSession, functions}
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
+import org.apache.spark.sql.internal.SQLConf.SHUFFLE_PARTITIONS
 
 import scala.concurrent.duration._
 
@@ -10,6 +11,7 @@ case class RSVPAnalyticsConfig(
     write_topic: String = "",
     bootstrapServers: String = "",
     checkpointDir: String = "/tmp/checkpoint",
+    // average processing time of real data takes only 1.5s
     triggerTime: Long = 10, // secs
     windowDuration: Long = 1 // minutes
   )
@@ -121,6 +123,10 @@ case class CountryInfo(code: String)
   *  etc.
   */
 object MeetUpRSVPAnalytics {
+
+  // size of data is small
+  final val numOfPartitions = 4
+
   def main(args: Array[String]): Unit = {
     val appName="RSVPAnalytics"
     val parser = new scopt.OptionParser[RSVPAnalyticsConfig](appName) {
@@ -155,8 +161,11 @@ object MeetUpRSVPAnalytics {
         // Create the spark session
         val spark = SparkSession
           .builder
-          .appName("Sensor Streaming Analytics.")
+          .appName("Meetup RSVPs - Streaming Analytics.")
           .getOrCreate()
+
+        // Override the defaul 200, otherwise we end up with empty partitions
+        spark.sessionState.conf.setConf(SHUFFLE_PARTITIONS, numOfPartitions)
 
         import spark.implicits._
         import org.apache.spark.sql.types._
@@ -182,6 +191,8 @@ object MeetUpRSVPAnalytics {
           .select('group_country as "code" )
           .as[CountryInfo]
           .map(country => CountryInfo(country.code.toUpperCase()))
+          // we need to do this to remove empty partitions, along with the sql shuffling setting above
+          .repartition(numOfPartitions, 'code)
           .groupBy('code)
           .count()
           .withColumn("value", struct('code, 'count))
