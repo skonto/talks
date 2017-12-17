@@ -73,7 +73,7 @@ cd visual/docker
 
 ###
 
-These steps assumes you have built the appropriate images and made your spark jar available within the
+These steps assume you have built the appropriate images and made your spark jar available within the
 cluster with the previos step. Also assume that you have installed a dc/os cluster for example
 by using a CF template: https://downloads.dcos.io/dcos/stable/aws.html and you have setup the DC/OS cli to connect to the cluster.
 
@@ -137,6 +137,19 @@ for id in $(dcos node --json | jq --raw-output '.[] | select(.attributes.public_
 ```
 You should see the earth map here: https://34.242.186.195:10000 and data updates logged
 in the ![console](./dcos_demo.png). At the top you can also see the ip we use to access the visual app.
+
+If you want to access the Spark ui you could use DC/OS VPN or ceate multi-hop port forwarding as follows:
+
+```
+ssh -i mykey  -L 4040:localhost:4040 core@<dcos-master-ip> ssh -i my-key -L 4040:localhost:4040 core@<target ip>
+```
+
+Target ip is the private ip where the driver is running. While dcos-master-ip is the public ip of the master
+of the DC/OS cluster. This will create a tunnel from your local host to the container running the driver which
+exposes port 4040 (Spark driver web ui). The ssh key `my-key` must be available on your client machine and also
+on the master so that the master can connect to to the target ip. You can just do that by adding it to the master
+on the home dir.
+
 
 TODO: Add health checks and try DC/COS strict mode (kerberos support).
 This app was tested on DC/OS 1.10 OSS/permissive modes.
