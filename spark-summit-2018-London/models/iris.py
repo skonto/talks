@@ -79,17 +79,22 @@ with tf.keras.backend.get_session() as sess:
         inputs={'input_image': tfm.input},
         outputs={t.name:t for t in tfm.outputs})
 
-
-# Use this command to serve your model during development
+# Use this command to serve your TF model during development
 # saved_model_cli run --dir ./ --tag_set serve --signature_def serving_default --input_exp 'input_image=np.array([ [5.5, 4.2, 1.4, 0.2]])'
 
+# Transform model to tf.js
 # This works fine when model is loaded in browser
 #tensorflowjs_converter --input_format keras ./keras_iris.h5 ./
 from subprocess import call
 call(["tensorflowjs_converter", "--input_format", "keras", "./keras_iris.h5", "./"])
 
-# python -m SimpleHTTPServer
+# To serve the tf.js model for local dev, run the next command in the tf-js folder
+# make sure you set the appropriate ip in index.js to avoid issues when requesting
+# resources with different origin than server's ip.
+# Make sure you have Extension Allow-Control-Allow-Origin: * for Chrome to make things easier.
 
+# python -m SimpleHTTPServer
+# Then just try http://ip:8000
 
 # Python 2.7.15rc1 (default, Apr 15 2018, 21:51:34)
 # [GCC 7.3.0] on linux2
