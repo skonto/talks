@@ -66,7 +66,7 @@ open("iris.tflite", "wb").write(tflite_model)
 # km.summary()
 
 # Save as a TFjs model
-# Does not work as expected
+# Does not work as expected when model is loaded
 # tfjs.converters.save_keras_model(km, "./")
 
 import tensorflow as tf
