@@ -16,16 +16,6 @@ def build_model():
     model.compile(tf.keras.optimizers.Adam(lr=0.04),'categorical_crossentropy',metrics=['accuracy'])
     return model
 
-def build_keras_model():
-    model=keras.models.Sequential()
-    model.add(keras.layers.Dense(10,input_shape=(4,),activation='sigmoid'))
-    model.add(keras.layers.Dense(3,activation='softmax'))
-    from keras import optimizers
-    adam=optimizers.Adam(lr=0.04)
-    model.compile(loss="categorical_crossentropy", optimizer=adam,metrics=['accuracy'])
-    return model
-
-
 dataset = pd.read_csv('iris.csv')
 # Split data into train and test sets
 X = dataset.iloc[:,0:4].values
@@ -61,13 +51,23 @@ converter = tf.contrib.lite.TocoConverter.from_keras_model_file(keras_file)
 tflite_model = converter.convert()
 open("iris.tflite", "wb").write(tflite_model)
 
+# def build_keras_model():
+#     model=keras.models.Sequential()
+#     model.add(keras.layers.Dense(10,input_shape=(4,),activation='sigmoid'))
+#     model.add(keras.layers.Dense(3,activation='softmax'))
+#     from keras import optimizers
+#     adam=optimizers.Adam(lr=0.04)
+#     model.compile(loss="categorical_crossentropy", optimizer=adam,metrics=['accuracy'])
+#     return model
+
 # Build using the keras api
-km = build_keras_model()
-km.fit(X_train,y_train,epochs=100)
-km.summary()
+# km = build_keras_model()
+# km.fit(X_train,y_train,epochs=100)
+# km.summary()
 
 # Save as a TFjs model
-tfjs.converters.save_keras_model(km, "./")
+# Does not work as expected
+# tfjs.converters.save_keras_model(km, "./")
 
 import tensorflow as tf
 tfm = tf.keras.models.load_model('./keras_iris.h5')
@@ -80,11 +80,16 @@ with tf.keras.backend.get_session() as sess:
         outputs={t.name:t for t in tfm.outputs})
 
 
-#saved_model_cli run --dir ./ --tag_set serve --signature_def serving_default --input_exp 'input_image=np.array([ [5.5, 4.2, 1.4, 0.2]])'
+# Use this command to serve your model during development
+# saved_model_cli run --dir ./ --tag_set serve --signature_def serving_default --input_exp 'input_image=np.array([ [5.5, 4.2, 1.4, 0.2]])'
 
-#tensorflowjs_converter --input_format keras ../keras_iris.h5 ./
+# This works fine when model is loaded in browser
+#tensorflowjs_converter --input_format keras ./keras_iris.h5 ./
+from subprocess import call
+call(["tensorflowjs_converter", "--input_format", "keras", "./keras_iris.h5", "./"])
 
-#python -m SimpleHTTPServer
+# python -m SimpleHTTPServer
+
 
 # Python 2.7.15rc1 (default, Apr 15 2018, 21:51:34)
 # [GCC 7.3.0] on linux2
