@@ -27,3 +27,7 @@
 * Jean Paul Barddal, Heitor Murilo Gomes, Fabrício Enembreck, Bernhard Pfahringer.A survey on feature drift adaptation: Definition, benchmark, challenges and future directions. https://core.ac.uk/download/pdf/85165365.pdf,https://www.sciencedirect.com/science/article/pii/S0164121216301030
 
 * Paulo Mauricio Gonçalves Jr.Roberto Souto Maior de BarrosRoberto Souto Maior de Barros. RCD: A Recurring Concept Drift Framework. (https://www.sciencedirect.com/science/article/abs/pii/S0167865513000494, https://www.researchgate.net/publication/235724609_RCD_A_Recurring_Concept_Drift_Framework)
+
+* Malini M. Patil. Handling Concept Drift in Data Streams by Using Drift Detection Methods. (https://link.springer.com/chapter/10.1007/978-981-13-1274-8_12)
+
+* Philipp Grulich, René Saitenmacher, Jonas Traub, Sebastian Breß, Tilmann Rabl, Volker Markl. Scalable Detection of Concept Drifts on Data Streams with Parallel Adaptive Windowing. EDBT 2018. (https://openproceedings.org/2018/conf/edbt/paper-318.pdf)
